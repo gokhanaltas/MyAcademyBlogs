@@ -26,20 +26,16 @@
         <input type="text" asp-for="CoverImage" class="form-control" />
         <span class="text-danger" asp-validation-for="CoverImage"></span>
     </div>
-
     <div class="form-group">
         <label>Blog Resmi 1</label>
         <input type="text" asp-for="BlogImage1" class="form-control" />
         <span class="text-danger" asp-validation-for="BlogImage1"></span>
     </div>
-
-
     <div class="form-group">
         <label>Blog Resmi 2</label>
         <input type="text" asp-for="BlogImage2" class="form-control" />
         <span class="text-danger" asp-validation-for="BlogImage2"></span>
     </div>
-
     <div class="form-group">
         <label>Kategori</label>
         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categories">
@@ -47,8 +43,7 @@
         </select>
         <span class="text-danger" asp-validation-for="CategoryId"></span>
     </div>
-    <br />
-    <button class="btn btn-primary mt-2">Güncelle</button>
 
+    <button class="btn btn-primary mt-2">Güncelle</button>
 
 </form>

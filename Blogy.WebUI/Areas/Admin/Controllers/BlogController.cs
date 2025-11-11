@@ -1,28 +1,37 @@
 ﻿using Blogy.Business.DTOs.BlogDtos;
 using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryServices;
+using Blogy.Entity.Entities;
+using Blogy.WebUI.Consts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class BlogController(IBlogService _blogService, ICategoryService _categoryService) : Controller
+    [Authorize(Roles = $"{Roles.Admin}")]
+    public class BlogController(IBlogService _blogService,
+                                ICategoryService _categoryService,
+                                UserManager<AppUser> _userManager) : Controller
     {
         private async Task GetCategoriesAsync()
         {
             var categories = await _categoryService.GetAllAsync();
 
-            ViewBag.Categories = (from category in categories
+            ViewBag.categories = (from category in categories
                                   select new SelectListItem
                                   {
                                       Text = category.CategoryName,
                                       Value = category.Id.ToString()
                                   }).ToList();
         }
+
+
         public async Task<IActionResult> Index()
         {
-            var blogs = await _blogService.GetBlogsWithCategoriesAsync();
+            var blogs = await _blogService.GetAllAsync();
             return View(blogs);
         }
 
@@ -40,6 +49,9 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
                 await GetCategoriesAsync();
                 return View(blogDto);
             }
+
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            blogDto.WriterId = user.Id;
             await _blogService.CreateAsync(blogDto);
             return RedirectToAction("Index");
         }
@@ -65,8 +77,13 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
                 await GetCategoriesAsync();
                 return View(updateBlogDto);
             }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            updateBlogDto.WriterId = user.Id;
+
             await _blogService.UpdateAsync(updateBlogDto);
             return RedirectToAction("Index");
         }
+
+
     }
 }
