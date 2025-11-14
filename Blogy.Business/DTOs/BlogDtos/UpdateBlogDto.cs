@@ -1,4 +1,8 @@
-﻿using Blogy.Business.DTOs.Common;
+﻿using Blogy.Business.DTOs.CategoryDtos;
+using Blogy.Business.DTOs.CommentDtos;
+using Blogy.Business.DTOs.Common;
+using Blogy.Business.DTOs.UserDtos;
+using Blogy.Entity.Entities;
 
 namespace Blogy.Business.DTOs.BlogDtos
 {

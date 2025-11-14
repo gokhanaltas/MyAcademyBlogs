@@ -1,4 +1,5 @@
 ﻿using Blogy.Business.DTOs.CategoryDtos;
+using Blogy.Business.DTOs.CommentDtos;
 using Blogy.Business.DTOs.Common;
 using Blogy.Business.DTOs.UserDtos;
 using Blogy.Entity.Entities;
@@ -18,6 +19,6 @@ namespace Blogy.Business.DTOs.BlogDtos
         public IList<BlogTag> BlogTags { get; set; }
         public int WriterId { get; set; }
         public ResultUserDto? Writer { get; set; }
-        //public IList<ResultCommentDto> Comments { get; set; }
+        public IList<ResultCommentDto> Comments { get; set; }
     }
 }
